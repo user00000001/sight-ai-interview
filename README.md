@@ -56,6 +56,6 @@ pnpm hardhat run --network localhost ./scripts/oracle-request.ts
       "value": 2
     }
   }
-}`这部分内容里的可变内容参数化，使用mapping存下主体当模板，再建方法通过模板键和传入参数，在方法内恢复成以上类似内容(比如先根据可变参数位置对json文本进行split，再拿到之后的参数后，再zip合并)再进行后面的emit调用；或者直接emit模板和参数数据后，在gateway服务合并，之后进行后面的调用
+}`这部分内容里的可变内容参数化，使用mapping存下主体当模板(类似protobuf将字段槽化，类似合约storage slot，跟名称无关，跟位置及类型相关)，再建方法通过模板键和传入参数，在方法内恢复成以上类似内容(比如先根据可变参数位置对json文本进行split，再拿到之后的参数后，再zip合并)再进行后面的emit调用；或者直接emit模板和参数数据后，在gateway服务合并，之后进行后面的调用
 
 - 可选任务2思路：类似ERC712/EIP-2612,离线对交易参数hash值签名产生vrs,在需要提取时,调用验证vrs的方法，将vrs和交易参数组合的hash值恢复拿到签名的地址，由此证明签名有效，再从签名的地址的allowance中转出到实际得交易对象下，见之前我的foundry练习库 https://github.com/user00000001/hardhat007/blob/master/test/Signatures.t.sol 
